@@ -25,7 +25,7 @@ y_test_target = np.eye(10)[y_test]
 training_losses = []
 testing_losses = []
 iters = np.arange(0, 10, 1)
-iters = np.arange(0, 2, 1)
+
 
 for i in iters:
 
@@ -50,8 +50,8 @@ for i in iters:
     );
 
     
-    training_losses.append(model.history.history['loss'])
-    testing_losses.append(model.history.history['val_loss'])
+    training_losses.append(model.history.history['loss']) # Training error
+    testing_losses.append(model.history.history['val_loss']) # Testing error
     
     
 

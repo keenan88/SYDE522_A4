@@ -28,10 +28,9 @@ for i in range(10):
 plt.show()
 
 
-training_losses = []
-testing_losses = []
+training_accuracies = []
+testing_accuracies = []
 iters = np.arange(0, 10, 1)
-iters = np.arange(0, 3, 1)
 N_epochs = 10
 
 for i in iters:
@@ -56,17 +55,17 @@ for i in iters:
     
     model.fit(x_train, y_train, epochs=N_epochs, validation_data=(x_test, y_test))
     
-    training_losses.append(model.history.history['loss'])
-    testing_losses.append(model.history.history['val_loss'])
+    training_accuracies.append(model.history.history['accuracy'])
+    testing_accuracies.append(model.history.history['val_accuracy'])
     
     
 plt.figure()
-plt.title("Training losses against epochs")
+plt.title("Training accuracy against epochs")
 plt.xlabel("Epcohs")
-plt.ylabel("Loss")
+plt.ylabel("Accuracy")
 
 for i in iters:    
-    plt.plot(np.arange(1,N_epochs + 1, 1), training_losses[i], label="Trial: " + str(i))
+    plt.plot(np.arange(1,N_epochs + 1, 1), training_accuracies[i], label="Trial: " + str(i))
     
 plt.grid()
 plt.legend()
@@ -74,12 +73,12 @@ plt.show()
 
 
 plt.figure()
-plt.title("Validation losses against epochs, Sequential model")
+plt.title("Validation accuracy against epochs, Sequential model")
 plt.xlabel("Epcohs")
-plt.ylabel("Loss")
+plt.ylabel("Accuracy")
 
 for i in iters:    
-    plt.plot(np.arange(1,N_epochs + 1, 1), testing_losses[i], label="Trial: " + str(i))
+    plt.plot(np.arange(1,N_epochs + 1, 1), testing_accuracies[i], label="Trial: " + str(i))
     
 plt.grid()
 plt.legend()

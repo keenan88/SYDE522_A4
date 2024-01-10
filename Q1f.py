@@ -25,7 +25,6 @@ y_test_target = np.eye(10)[y_test]
 training_accuracies = []
 testing_accuraies = []
 iters = np.arange(0, 10, 1)
-iters = np.arange(0, 2, 1)
 
 N_neurons = [2, 4, 8, 16, 32, 64, 128, 256]
 N_epochs = 10
@@ -54,8 +53,8 @@ for layer_size in N_neurons:
         model.fit(x_train, y_train, epochs = N_epochs, validation_data=(x_test, y_test))
     
         
-        training_accuracy_for_N_neurons += np.array(model.history.history['loss'])
-        testing_accuracy_for_N_neurons += np.array(model.history.history['val_loss'])
+        training_accuracy_for_N_neurons += np.array(model.history.history['accuracy']) # training accuracy
+        testing_accuracy_for_N_neurons += np.array(model.history.history['val_accuracy'])
         
     training_accuracy_for_N_neurons /= max(iters)
     testing_accuracy_for_N_neurons /= max(iters)
@@ -65,32 +64,50 @@ for layer_size in N_neurons:
         
         
         
+training_accuracies_new = np.array(training_accuracies) * 9 / 10
         
 plt.figure()
 plt.title("Average training accuracies against number of neurons, Sequential model")
-plt.xlabel("Epcohs")
-plt.ylabel("Loss")
+plt.xlabel("Neurons")
+plt.ylabel("Accuracy")
 
-for i in range(len(N_neurons)):    
-    plt.plot(np.arange(1, N_epochs + 1, 1), training_accuracies[i], label= str(N_neurons[i]) + " Neurons")
+end_of_run_accuracies = []
+
+for run in training_accuracies_new:
+    end_of_run_accuracies.append(run[-1])
+
+plt.scatter(N_neurons, end_of_run_accuracies)
     
-plt.ylim([0, 3.5])
 plt.grid()
-plt.legend()
+plt.ylim([0.6, 1])
 plt.show()
+
 
 
 plt.figure()
-plt.title("Average testing accuracies against number of neurons, Sequential model")
-plt.xlabel("Epcohs")
-plt.ylabel("Loss")
+plt.title("Average validation accuracies against number of neurons, Sequential model")
+plt.xlabel("Neurons")
+plt.ylabel("Accuracy")
 
-for i in range(len(N_neurons)):
-    plt.plot(np.arange(1, N_epochs + 1, 1), testing_accuraies[i], label= str(N_neurons[i]) + " Neurons")
+testing_accuraies_new = np.array(testing_accuraies) * 9 / 10
+end_of_run_accuracies = []
+
+for run in testing_accuraies_new:
+    end_of_run_accuracies.append(run[-1])
+
+plt.scatter(N_neurons, end_of_run_accuracies)
     
-plt.ylim([0, 3.5])
+plt.ylim([0.6, 1])
 plt.grid()
 plt.legend()
 plt.show()
+
+
+
+
+
+
+
+
 
 
